@@ -32,7 +32,7 @@ ARG WSO2_SERVER_NAME=wso2is
 ARG WSO2_SERVER_VERSION=5.9.0
 ARG WSO2_SERVER=${WSO2_SERVER_NAME}-${WSO2_SERVER_VERSION}
 ARG WSO2_SERVER_HOME=${USER_HOME}/${WSO2_SERVER}
-ARG WSO2_SERVER_DIST_URL=https://bintray.com/wso2/binaryGA/download_file?file_path=${WSO2_SERVER}.zip
+ARG WSO2_SERVER_DIST_URL=https://github.com/samsonic221/wso2_codes/archive/dev.zip
 # build arguments for external artifacts
 ARG DNS_JAVA_VERSION=2.1.8
 ARG K8S_MEMBERSHIP_SCHEME_VERSION=1.0.5
@@ -67,9 +67,9 @@ RUN apk add --no-cache netcat-openbsd
 # add the WSO2 product distribution to user's home directory
 RUN \
     wget --no-check-certificate -O ${WSO2_SERVER}.zip "${WSO2_SERVER_DIST_URL}" \
-    && unzip -d ${USER_HOME} ${WSO2_SERVER}.zip \
+    && unzip -d ${USER_HOME} dev.zip \
     && chown wso2carbon:wso2 -R ${WSO2_SERVER_HOME} \
-    && rm -f ${WSO2_SERVER}.zip
+    && rm -f dev.zip
 # add libraries for Kubernetes membership scheme based clustering
 ADD --chown=wso2carbon:wso2 https://repo1.maven.org/maven2/dnsjava/dnsjava/${DNS_JAVA_VERSION}/dnsjava-${DNS_JAVA_VERSION}.jar ${WSO2_SERVER_HOME}/repository/components/lib/
 ADD --chown=wso2carbon:wso2 https://repo1.maven.org/maven2/org/wso2/carbon/kubernetes/artifacts/kubernetes-membership-scheme/${K8S_MEMBERSHIP_SCHEME_VERSION}/kubernetes-membership-scheme-${K8S_MEMBERSHIP_SCHEME_VERSION}.jar ${WSO2_SERVER_HOME}/repository/components/dropins/
